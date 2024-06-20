@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Using off-the-shelf large pre-trained models
+        (LPMs) as synthetic data generators for effective few-shot
+        dataset augmentation.">
+  <meta name="keywords" content="Zero-shot, few-shot, domain adaptation, diffusion">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Domain Gap Embeddings for Generative Dataset Augmentation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Domain Gap Embeddings for Generative Dataset Augmentation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.ri.cmu.edu/ri-people/yinong-wang/">Yinong Oliver Wang*</a>,</span>
+            <span class="author-block">
+              <a href="https://fuzzythecat.github.io/">Younjoon Chung*</a>,</span>
+            <span class="author-block">
+              <a href="https://chenwu.io/">Chen Henry Wu</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.cs.cmu.edu/~ftorre/">Fernando De la Torre</a>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Carnegie Mellon University</span>
+          </div>
+          <div>
+            <span class="author-block"><sup>*</sup>Equal Contribution</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://openaccess.thecvf.com/content/CVPR2024/papers/Wang_Domain_Gap_Embeddings_for_Generative_Dataset_Augmentation_CVPR_2024_paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Video Link. -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/humansensinglab/DoGE"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+        Can we use off-the-shelf large pre-trained models (LPMs) as synthetic data generators for effective few-shot dataset augmentation toward specific distributions?
+      </h2>
+      <div style="display: flex; justify-content: center;">
+        <img src="./static/images/teaser.png" alt="Teaser Image" style="width: 80%; height: auto;">
+      </div>
+      <h2 class="subtitle has-text-centered">
+        To address these issues, we propose DoGE, a <b>few-shot</b> <b>cross-distribution</b> data augmentation framework that is <b>task-agnostic</b> and <b>inference-only</b>.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            The performance of deep learning models is intrinsically tied to the quality, volume, and relevance of their training data. 
+            Gathering ample data for production scenarios often demands significant time and resources. 
+            Among various strategies, data augmentation circumvents exhaustive data collection by generating new data points from existing ones. 
+            However, traditional augmentation techniques can be less effective amidst a shift in training and testing distributions.
+          </p>
+          <p>
+            This paper explores the potential of synthetic data by leveraging large pre-trained models for data augmentation, 
+            especially when confronted with distribution shifts. 
+            Although recent advancements in generative models have enabled several prior works in cross-distribution data generation, 
+            they require model fine-tuning and a complex setup. To bypass these shortcomings, 
+            we introduce <strong>Do</strong>main <strong>G</strong>ap <strong>E</strong>mbeddings,
+            a plug-and-play semantic data augmentation framework in a <strong>cross-distribution few-shot</strong> setting. 
+            Our method extracts disparities between source and desired data distributions in a latent form, 
+            and subsequently steers a generative process to supplement the training set with endless diverse synthetic samples. 
+            Our evaluations, conducted on a subpopulation shift and three domain adaptation scenarios under a few-shot paradigm, 
+            reveal that our versatile method improves performance across tasks without needing hands-on intervention or intricate fine-tuning. 
+            Our method paves the way to effortlessly generate realistic, controllable synthetic datasets following the test distributions, 
+            bolstering real-world efficacy for downstream task models.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{doge2024,
+      author={Yinong Oliver Wang, Younjoon Chung, Chen Henry Wu and Fernando De la Torre},
+      title={Domain Gap Embeddings for Generative Dataset Augmentation},
+      booktitle={CVPR},
+  year={2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+      href="./static/images/Wang_Domain_Gap_Embeddings_for_Generative_Dataset_Augmentation_CVPR_2024_paper.pdf">
+     <i class="fas fa-file-pdf"></i>
+   </a>
+   <a class="icon-link" href="https://github.com/humansensinglab/DoGE" class="external-link" disabled>
+     <i class="fab fa-github"></i>
+   </a>
+      <br />
+      <p>Page template borrowed from <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a>.</p>
+      <p>Copyright © 2024 Carnegie Mellon University</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
